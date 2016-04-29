@@ -22,9 +22,16 @@ export CFLAGS=" ${ARCH_FLAGS} -fpic -ffunction-sections -funwind-tables -fstack-
 export LDFLAGS=" ${ARCH_LINK} "
 
 
-./Configure --openssldir={OUTPUT_ARM} android
+./Configure --openssldir=${OUTPUT_ARM} android
 PATH=$TOOLCHAIN_PATH:$PATH 
-make clean && make
-mv ${WORKDIR}/openssl-${VERSION}/libcrypto.a ${WORKDIR}/openssl-${VERSION}/libssl.a ${OUTPUT_ARM}
+make
+make install
+if [ $? -ne 0 ]; then
+  exit 1
+else
+ rm ${WORKDIR}/openssl-${VERSION}/libcrypto.a ${WORKDIR}/openssl-${VERSION}/libssl.a 
+fi
+
+find . -type f -name "*.o" | xargs rm -rf {}
 
 cd .. 

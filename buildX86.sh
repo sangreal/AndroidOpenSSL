@@ -20,10 +20,18 @@ export CPPFLAGS=" ${ARCH_FLAGS} -fpic -ffunction-sections -funwind-tables -fstac
 export CXXFLAGS=" ${ARCH_FLAGS} -fpic -ffunction-sections -funwind-tables -fstack-protector -fno-strict-aliasing -finline-limit=64 -frtti -fexceptions "
 export CFLAGS=" ${ARCH_FLAGS} -fpic -ffunction-sections -funwind-tables -fstack-protector -fno-strict-aliasing -finline-limit=64 "
 export LDFLAGS=" ${ARCH_LINK} "
-./Configure android-x86
-PATH=$TOOLCHAIN_PATH:$PATH
-make clean
-make
 
-mv ${WORKDIR}/openssl-${VERSION}/libcrypto.a ${WORKDIR}/openssl-${VERSION}/libssl.a ${OUTPUT_X86}
+./Configure --openssldir=${OUTPUT_X86} android-x86
+PATH=$TOOLCHAIN_PATH:$PATH
+make
+make install
+if [ $? -ne 0 ]; then
+  exit 1
+else
+ rm ${WORKDIR}/openssl-${VERSION}/libcrypto.a ${WORKDIR}/openssl-${VERSION}/libssl.a 
+fi
+
+
+find . -type f -name "*.o" | xargs rm -rf {}
+
 cd ..

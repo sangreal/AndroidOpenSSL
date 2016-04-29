@@ -21,10 +21,17 @@ export CXXFLAGS=" ${ARCH_FLAGS} -fpic -ffunction-sections -funwind-tables -fstac
 export CFLAGS=" ${ARCH_FLAGS} -fpic -ffunction-sections -funwind-tables -fstack-protector -fno-strict-aliasing -finline-limit=64 "
 export LDFLAGS=" ${ARCH_LINK} "
 
-./Configure --openssldir={OUTPUT_ARMV7} android-armv7
+./Configure --openssldir=${OUTPUT_ARMV7} android-armv7
 PATH=$TOOLCHAIN_PATH:$PATH
-make clean && make
-mv ${WORKDIR}/openssl-${VERSION}/libcrypto.a ${WORKDIR}/openssl-${VERSION}/libssl.a ${OUTPUT_ARMV7}
+make
+make install
+rm ${WORKDIR}/openssl-${VERSION}/libcrypto.a ${WORKDIR}/openssl-${VERSION}/libssl.a 
+if [ $? -ne 0 ]; then
+  exit 1
+fi
+
+
+find . -type f -name "*.o" | xargs rm -rf {}
 
 cd ..
 
