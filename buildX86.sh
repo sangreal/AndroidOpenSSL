@@ -2,7 +2,7 @@
 
 cd "openssl-${VERSION}"
 
-export NDK=/usr/local/android-ndk
+export NDK=${NDKDIR}
 $NDK/build/tools/make-standalone-toolchain.sh --platform=android-14 --toolchain=x86-4.8 --install-dir=${WORKDIR}/android-toolchain-x86
 export TOOLCHAIN_PATH=${WORKDIR}/android-toolchain-x86/bin
 export TOOL=i686-linux-android

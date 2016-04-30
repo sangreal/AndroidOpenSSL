@@ -1,6 +1,8 @@
 #!/bin/sh
 
 VERSION=1.0.2g
+NDKDIR=/usr/local/android-ndk
+
 WORKDIR=`pwd`
 
 OUTPUT_ARMV7=${WORKDIR}/output/openssl/armeabi-v7a

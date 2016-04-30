@@ -2,7 +2,7 @@
 
 cd "openssl-${VERSION}"
 
-export NDK=/usr/local/android-ndk
+export NDK=${NDKDIR}
 $NDK/build/tools/make-standalone-toolchain.sh --platform=android-14 --toolchain=arm-linux-androideabi-4.8 --install-dir=${WORKDIR}/android-toolchain-arm
 export TOOLCHAIN_PATH=${WORKDIR}/android-toolchain-arm/bin
 export TOOL=arm-linux-androideabi

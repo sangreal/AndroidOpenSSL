@@ -2,7 +2,7 @@
 
 cd "openssl-${VERSION}"
 
-export NDK=/usr/local/android-ndk
+export NDK=${NDKDIR}
 $NDK/build/tools/make-standalone-toolchain.sh --platform=android-14 --toolchain=arm-linux-androideabi-4.8 --install-dir=${WORKDIR}/android-toolchain-arm
 export TOOLCHAIN_PATH=${WORKDIR}/android-toolchain-arm/bin
 export TOOL=arm-linux-androideabi
@@ -25,11 +25,11 @@ export LDFLAGS=" ${ARCH_LINK} "
 PATH=$TOOLCHAIN_PATH:$PATH
 make
 make install
-rm ${WORKDIR}/openssl-${VERSION}/libcrypto.a ${WORKDIR}/openssl-${VERSION}/libssl.a 
 if [ $? -ne 0 ]; then
   exit 1
+else
+ rm ${WORKDIR}/openssl-${VERSION}/libcrypto.a ${WORKDIR}/openssl-${VERSION}/libssl.a 
 fi
-
 
 find . -type f -name "*.o" | xargs rm -rf {}
 
