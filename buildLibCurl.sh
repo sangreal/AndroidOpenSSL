@@ -6,6 +6,7 @@ VERSION=7.45.0
 
 WORKDIR=`pwd`
 
+NDKDIR=/usr/local/android-ndk
 SSLDIR=${WORKDIR}/output/openssl
 
 SSL_X86_INCLDIR=${SSLDIR}/x86/include
@@ -40,7 +41,7 @@ cd curl-${VERSION}
 
 echo '************ begin to build x86 libcurl ******** '
 echo ${SSL_X86_INCLDIR}
-export NDK=/usr/local/android-ndk
+export NDK=${NDKDIR}
 $NDK/build/tools/make-standalone-toolchain.sh --platform=android-14 --toolchain=x86-4.8 --install-dir=${WORKDIR}/android-toolchain-x86
 export TOOLCHAIN_PATH=${WORKDIR}/android-toolchain-x86/bin
 export TOOL=i686-linux-android
@@ -65,7 +66,7 @@ make install
 echo '************ end build x86 ****************'
 
 echo '************ begin to build arm libcurl ******** '
-export NDK=/usr/local/android-ndk
+export NDK=${NDKDIR}
 $NDK/build/tools/make-standalone-toolchain.sh --platform=android-14 --toolchain=arm-linux-androideabi-4.8 --install-dir=${WORKDIR}/android-toolchain-arm
 export TOOLCHAIN_PATH=${WORKDIR}/android-toolchain-arm/bin
 export TOOL=arm-linux-androideabi
